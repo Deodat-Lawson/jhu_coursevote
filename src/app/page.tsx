@@ -12,6 +12,7 @@ export default function HomePage() {
   }));
 
 
+
   return (
     <main className="">
         <h1>Click to Punch NLP</h1>
