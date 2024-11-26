@@ -12,13 +12,22 @@ export default function HomePage() {
   }));
 
 
-
   return (
-    <main className="">
-        <h1>Click to Punch NLP</h1>
-        <h2>Click to Punch NLP is a tool to help you express your hatred towards NLP.</h2>
+    <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c] text-white">
+      <div className="flex flex-wrap">
+        {mockImages.map((image) => (
+          <div key={image.id} className="m-2">
+            <img
+              src={image.url}
+              alt="mock"
+              className="w-32 h-32 object-cover rounded-lg"
+            />
+          </div>
+        ))}
+
 
       Hello, development in progress!
+      </div>
     </main>
   );
 }
