@@ -16,6 +16,7 @@ export default async function HomePage() {
                     <div key={post.id} className="m-2">
                         <img src={post.url} className="flex w-48 flex-col" />
                         <div>{post.name}</div>
+                        <div>uploaded by {post.userId}</div>
                     </div>
                 ))}
 

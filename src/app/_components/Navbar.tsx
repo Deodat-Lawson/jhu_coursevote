@@ -1,8 +1,12 @@
+"use client";
+
 import "~/styles/globals.css";
 import { GeistSans } from "geist/font/sans";
 import { type Metadata } from "next";
 import Link from "next/link";
 import { ClerkProvider, SignInButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
+import { UploadButton } from "~/app/utils/uploadthing";
+import {useRouter} from "next/navigation";
 
 export const metadata: Metadata = {
     title: "Create T3 App",
@@ -11,6 +15,9 @@ export const metadata: Metadata = {
 };
 
 export const Navbar = () => {
+
+    const router = useRouter();
+
     return (
         <nav className="bg-gray-800 text-white">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -31,12 +38,18 @@ export const Navbar = () => {
                             About us
                         </Link>
 
-                        <SignedOut>
-                            <SignInButton />
-                        </SignedOut>
-                        <SignedIn>
-                            <UserButton />
-                        </SignedIn>
+                        <div className="flex flex-row">
+                            <SignedOut>
+                                <SignInButton />
+                            </SignedOut>
+                            <SignedIn>
+                                <UploadButton endpoint="imageUploader" onClientUploadComplete={() => {
+                                    router.refresh();
+                                }}/>
+                                <UserButton />
+                            </SignedIn>
+                        </div>
+
 
                     </div>
                 </div>
