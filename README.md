@@ -7,7 +7,8 @@
 - [X] Set up a database (vercel postgres)
 - [X] Attach database to UI
 - [X] Add authentication (with clerk)
-- [ ] Add image upload
+- [X] Add image upload
+- [ ] "taint"
 - [ ] Routing
 - [ ] Delete button
 - [ ] Analytics

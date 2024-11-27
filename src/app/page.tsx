@@ -1,14 +1,17 @@
 import Link from "next/link";
 import { db } from "~/server/db";
-
+import {getMyImages} from "~/server/queries";
 import { ClerkProvider } from "@clerk/nextjs";
 
 
 export const dynamic = "force-dynamic";
 
-const images = await db.query.images.findMany();
+
 
 export default async function HomePage() {
+
+    const images = await getMyImages();
+
     return (
         <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c] text-white">
             <div className="flex flex-wrap gap-4">
