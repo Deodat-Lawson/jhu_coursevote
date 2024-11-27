@@ -1,20 +1,22 @@
-"use client";
+'use client';
 
-import * as Sentry from "@sentry/nextjs";
-import NextError from "next/error";
-import { useEffect } from "react";
+import * as Sentry from '@sentry/nextjs';
+import { useEffect } from 'react';
 
+export default function GlobalError({ error, reset }: { error: Error; reset: () => void }) {
+    useEffect(() => {
+        // Log the error to Sentry
+        Sentry.captureException(error);
+        console.error(error);
+    }, [error]);
 
-export default function GlobalError(props: { error: unknown }) {
-  useEffect(() => {
-    Sentry.captureException(props.error);
-  }, [props.error]);
-
-  return (
-    <html>
-      <body>
-        <NextError statusCode={500} />
-      </body>
-    </html>
-  );
+    return (
+        <html>
+        <body>
+        <h2>Something went wrong!</h2>
+        <p>{error.message}</p>
+        <button onClick={() => reset()}>Try again</button>
+        </body>
+        </html>
+    );
 }
