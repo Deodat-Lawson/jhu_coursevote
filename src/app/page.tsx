@@ -2,19 +2,21 @@ import Link from "next/link";
 import { db } from "~/server/db";
 
 
+export const dynamic = "force-dynamic";
+
+const posts = await db.query.posts.findMany();
+
+const mockUrl = [
+    "https://utfs.io/f/7CCGyytM9ORCCFJ2C5euiXWMRZ8pT590k71jgUAnoEwPJy2F",
+];
+
+const mockImages = mockUrl.map((url, index) => ({
+    id: index + 1,
+    url,
+}));
+
 export default async function HomePage() {
-    const posts = await db.query.posts.findMany();
 
-
-
-    const mockUrl = [
-        "https://utfs.io/f/7CCGyytM9ORCCFJ2C5euiXWMRZ8pT590k71jgUAnoEwPJy2F",
-    ];
-
-    const mockImages = mockUrl.map((url, index) => ({
-        id: index + 1,
-        url,
-    }));
 
 
     return (
