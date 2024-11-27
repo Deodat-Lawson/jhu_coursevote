@@ -3,10 +3,10 @@
 ## TODO
 
 - [X] Make it deploy
-- [ ] Scaffold basic UI with mock data
-- [ ] Set up a database (vercel postgres)
-- [ ] Attach database to UI
-- [ ] Add authentication
+- [X] Scaffold basic UI with mock data
+- [X] Set up a database (vercel postgres)
+- [X] Attach database to UI
+- [X] Add authentication (with clerk)
 - [ ] Add image upload
 - [ ] Routing
 - [ ] Delete button
