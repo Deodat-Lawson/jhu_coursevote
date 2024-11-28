@@ -43,9 +43,6 @@ export const Navbar = () => {
                                 <SignInButton />
                             </SignedOut>
                             <SignedIn>
-                                <UploadButton endpoint="imageUploader" onClientUploadComplete={() => {
-                                    router.refresh();
-                                }}/>
                                 <UserButton />
                             </SignedIn>
                         </div>

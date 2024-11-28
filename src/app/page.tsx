@@ -5,6 +5,7 @@ import { db } from "~/server/db";
 import { ClerkProvider, SignedIn, UserButton } from "@clerk/nextjs";
 import { UploadButton } from "~/app/utils/uploadthing";
 import { getImages } from "~/server/queries";
+import {UploadingBox} from "~/app/_components/UploadingBox"
 
 export const dynamic = "force-dynamic";
 
@@ -46,12 +47,20 @@ export default function HomePage() {
                 {/* Header Section */}
                 <div className="mb-8 flex items-center justify-between">
                     <h1 className="text-3xl font-bold text-white">Popular Hopkins Courses</h1>
-
                 </div>
 
                 <div className="mb-8 rounded-lg bg-blue-600/20 p-4 text-center text-white">
-                    <p>Project still in development, please sign in to upload an image through the navigation bar (Note it takes around 5 minutes for your image to show up)</p>
+                    <p>Project still in development, please sign in to upload</p>
+                    <p></p>
                 </div>
+
+                <div>
+                    <p>Upload here</p>
+                    <UploadingBox />
+                </div>
+
+
+
                 {/* Gallery Grid */}
                 <Images/>
             </div>
