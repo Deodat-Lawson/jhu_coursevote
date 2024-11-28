@@ -20,11 +20,13 @@ async function Images() {
                     className="group overflow-hidden rounded-lg bg-white/10 p-4 transition-all hover:bg-white/20"
                 >
                     <div className="aspect-square overflow-hidden rounded-lg">
+                        <Link href={`/photos/${post.id}`}>
                         <img
                             src={post.url}
                             alt={post.name}
                             className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
                         />
+                        </Link>
                     </div>
                     <div className="mt-4 space-y-2">
                         <h3 className="text-lg font-medium text-white">{post.name}</h3>
