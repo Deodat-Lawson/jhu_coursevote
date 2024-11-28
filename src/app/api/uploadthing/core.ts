@@ -21,12 +21,18 @@ export const ourFileRouter = {
     })
         // Set permissions and file types for this FileRoute
         .middleware(async ({ req }) => {
+
+            console.log("upload process started");
+
             // This code runs on your server before upload
             const user = await auth();
+
 
             // If you throw, the user will not be able to upload
             // eslint-disable-next-line @typescript-eslint/only-throw-error
             if (!user.userId) throw new UploadThingError("Unauthorized");
+
+            console.log("user id", user.userId);
 
             // Whatever is returned here is accessible in onUploadComplete as `metadata`
             return { userId: user.userId };
