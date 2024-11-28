@@ -31,12 +31,12 @@ export const Navbar = () => {
 
                     {/* Navigation Links */}
                     <div className="flex space-x-4">
-                        <Link href="/" className="px-3 py-2 rounded-md hover:bg-gray-700 transition-colors">
-                            Home
-                        </Link>
-                        <Link href="/about" className="px-3 py-2 rounded-md hover:bg-gray-700 transition-colors">
-                            About us
-                        </Link>
+                        {/*<Link href="/" className="px-3 py-2 rounded-md hover:bg-gray-700 transition-colors">*/}
+                        {/*    Home*/}
+                        {/*</Link>*/}
+                        {/*<Link href="/about" className="px-3 py-2 rounded-md hover:bg-gray-700 transition-colors">*/}
+                        {/*    About us*/}
+                        {/*</Link>*/}
 
                         <div className="flex flex-row">
                             <SignedOut>
