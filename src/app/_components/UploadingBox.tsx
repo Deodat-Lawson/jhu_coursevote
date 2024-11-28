@@ -16,6 +16,7 @@ export const  UploadingBox= () => {
         <UploadDropzone endpoint="imageUploader" onClientUploadComplete={() => {
              router.refresh();
         }}/>
+
     </SignedIn>
 
     );
