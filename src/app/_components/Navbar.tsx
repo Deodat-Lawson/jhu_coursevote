@@ -6,7 +6,6 @@ import { type Metadata } from "next";
 import Link from "next/link";
 import { ClerkProvider, SignInButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
 import { UploadButton } from "~/app/utils/uploadthing";
-import {useRouter} from "next/navigation";
 
 export const metadata: Metadata = {
     title: "Create T3 App",
@@ -16,7 +15,6 @@ export const metadata: Metadata = {
 
 export const Navbar = () => {
 
-    const router = useRouter();
 
     return (
         <nav className="bg-gray-800 text-white">
