@@ -8,8 +8,10 @@
 - [X] Attach database to UI
 - [X] Add authentication (with clerk)
 - [X] Add image upload
-- [ ] React "tiant"
-- [ ] Routing
-- [ ] Delete button
-- [ ] Analytics
-- [ ] Rate limiting
+- [X] React "tiant"
+- [X] Routing
+- [X] Delete button
+- [ ] Comments
+- [ ] 5 Stars Button and sync to backend database
+- [ ] 
+- 
