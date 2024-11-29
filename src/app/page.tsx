@@ -42,29 +42,37 @@ async function Images() {
 }
 
 export default function HomePage() {
-
     return (
         <main className="min-h-screen bg-gradient-to-b from-slate-800 to-slate-900">
             <div className="container mx-auto px-4 py-8">
                 {/* Header Section */}
                 <div className="mb-8 flex items-center justify-between">
-                    <h1 className="text-3xl font-bold text-white">Popular Hopkins Courses</h1>
+                    <h1 className="text-3xl font-bold text-white">JHU Course Vote (Beta 1.0)</h1>
                 </div>
 
                 <div className="mb-8 rounded-lg bg-blue-600/20 p-4 text-center text-white">
                     <p>Project still in development, please sign in to upload</p>
-                    <p></p>
                 </div>
 
-                <div>
-                    <p>Upload here</p>
-                    <UploadingBox />
+                {/* Upload Section */}
+                <div className="mb-12 rounded-xl bg-slate-700/50 p-6 border-2 border-slate-600">
+                    <div className="flex items-center justify-between mb-4">
+                        <h2 className="text-xl font-semibold text-white">Add a Course</h2>
+                        <div className="h-px flex-1 bg-slate-600 mx-4"></div>
+                    </div>
+                    <div className="bg-slate-800/50 rounded-lg p-4">
+                        <UploadingBox />
+                    </div>
                 </div>
 
-
-
-                {/* Gallery Grid */}
-                <Images/>
+                {/* Gallery Section */}
+                <div className="mt-12">
+                    <div className="flex items-center justify-between mb-6">
+                        <h2 className="text-xl font-semibold text-white">Popular Courses</h2>
+                        <div className="h-px flex-1 bg-slate-600 mx-4"></div>
+                    </div>
+                    <Images/>
+                </div>
             </div>
         </main>
     );

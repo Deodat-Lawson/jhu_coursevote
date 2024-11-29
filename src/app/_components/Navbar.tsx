@@ -24,21 +24,23 @@ export const Navbar = () => {
                 <div className="flex items-center justify-between h-16">
                     {/* Logo/Brand */}
                     <div className="flex-shrink-0">
-                        <Link href="/click_to_punch_nlp/public" className="text-xl font-bold">
+                        <Link href="/" className="text-xl font-bold">
                             JHU Course Vote
                         </Link>
                     </div>
 
                     {/* Navigation Links */}
                     <div className="flex space-x-4">
-                        {/*<Link href="/" className="px-3 py-2 rounded-md hover:bg-gray-700 transition-colors">*/}
-                        {/*    Home*/}
-                        {/*</Link>*/}
+                        <Link href="/" className="px-3 py-2 rounded-md hover:bg-gray-700 transition-colors">
+                            Home
+                        </Link>
                         {/*<Link href="/about" className="px-3 py-2 rounded-md hover:bg-gray-700 transition-colors">*/}
                         {/*    About us*/}
                         {/*</Link>*/}
 
                         <div className="flex flex-row">
+
+
                             <SignedOut>
                                 <SignInButton />
                             </SignedOut>
