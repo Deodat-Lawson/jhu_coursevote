@@ -1,51 +1,61 @@
-// CommentSection.tsx
-'use client';
+"use client";
 
-import { useState } from 'react';
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 
-interface Comment {
-    id: number;
-    user: string;
-    text: string;
-    timestamp: string;
+interface CommentFormProps {
+    imageId: number;
 }
 
-export default function CommentSection({ imageId }: { imageId: number }) {
-    const [comments, setComments] = useState<Comment[]>([
-        {
-            id: 1,
-            user: 'User123',
-            text: 'Beautiful capture! Love the composition and lighting.',
-            timestamp: '2 hours ago'
-        }
-    ]);
-    const [newComment, setNewComment] = useState('');
+export default function CommentForm({ imageId }: CommentFormProps) {
+    const router = useRouter();
+    const [newComment, setNewComment] = useState("");
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [error, setError] = useState<string | null>(null);
 
     const handleSubmitComment = async (e: React.FormEvent) => {
         e.preventDefault();
-        if (!newComment.trim()) return;
+        if (!newComment.trim() || isSubmitting) return;
+
+        setIsSubmitting(true);
+        setError(null);
 
         try {
-            const comment: Comment = {
-                id: Date.now(),
-                user: 'CurrentUser',
-                text: newComment,
-                timestamp: 'Just now'
-            };
 
-            setComments(prev => [comment, ...prev]);
-            setNewComment('');
+            // console.log("request started");
+            const response = await fetch("/api/comment", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    imageId,
+                    text: newComment,
+                }),
+            });
+
+            // console.log("request sent");
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.error || "Failed to post comment");
+            }
+
+            setNewComment("");
+            router.refresh();
         } catch (error) {
-            console.error('Error posting comment:', error);
+            const message = error instanceof Error ? error.message : "Failed to post comment";
+            setError(message);
+            console.error("Error posting comment:", error);
+        } finally {
+            setIsSubmitting(false);
         }
     };
 
     return (
-        <div className="space-y-4">
-            <h4 className="font-medium text-slate-100">Comments</h4>
-
-            {/* Comment Form - Fixed at Bottom */}
-            <form onSubmit={handleSubmitComment} className="flex space-x-2">
+        <div className="space-y-2">
+            <form onSubmit={handleSubmitComment} className="flex gap-2 sticky bottom-4 bg-slate-800/90 backdrop-blur-sm p-4 rounded-lg shadow-lg">
                 <input
                     type="text"
                     value={newComment}
@@ -53,39 +63,26 @@ export default function CommentSection({ imageId }: { imageId: number }) {
                     placeholder="Add a comment..."
                     className="flex-1 px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg
                              text-slate-100 placeholder-slate-400
-                             focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                             focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent
+                             transition-all duration-200"
                 />
                 <button
                     type="submit"
-                    className="px-4 py-2 bg-blue-600 text-slate-100 rounded-lg
-                             hover:bg-blue-500 transition-colors duration-200
-                             focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-slate-800"
+                    disabled={isSubmitting || !newComment.trim()}
+                    className="px-6 py-2 bg-blue-600 text-slate-100 rounded-lg
+                             hover:bg-blue-500 active:bg-blue-700
+                             transition-colors duration-200
+                             focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-slate-800
+                             disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                    Post
+                    {isSubmitting ? "Posting..." : "Post"}
                 </button>
             </form>
-
-            {/* Comments List */}
-            <div className="space-y-4">
-                {comments.map(comment => (
-                    <div key={comment.id} className="border-b border-slate-700 pb-4">
-                        <div className="flex items-center space-x-2 mb-2">
-                            <div className="w-8 h-8 rounded-full bg-slate-700" />
-                            <div>
-                                <p className="font-medium text-sm text-slate-100">
-                                    {comment.user}
-                                </p>
-                                <p className="text-xs text-slate-400">
-                                    {comment.timestamp}
-                                </p>
-                            </div>
-                        </div>
-                        <p className="text-sm text-slate-300">
-                            {comment.text}
-                        </p>
-                    </div>
-                ))}
-            </div>
+            {error && (
+                <div className="text-red-400 text-sm px-4">
+                    Error: {error}
+                </div>
+            )}
         </div>
     );
 }

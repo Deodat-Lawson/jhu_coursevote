@@ -58,6 +58,7 @@ export const comments = createTable(
         ),
     },
     (comment) => ({
+
         // Index for faster comment lookups by image
         imageIndex: index("image_id_idx").on(comment.imageId),
         // Index for faster comment lookups by user
