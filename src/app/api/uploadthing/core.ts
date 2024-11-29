@@ -6,7 +6,6 @@ import { db } from "~/server/db";
 import {images} from "~/server/db/schema";
 
 const f = createUploadthing();
-const { Clerk } = require("@clerk/clerk-sdk-node");
 
 // FileRouter for your app, can contain multiple FileRoutes
 export const ourFileRouter = {
