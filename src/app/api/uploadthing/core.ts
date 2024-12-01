@@ -1,6 +1,7 @@
 import { createUploadthing, type FileRouter } from "uploadthing/next";
 import { UploadThingError } from "uploadthing/server";
 import { auth } from "@clerk/nextjs/server";
+
 import { db } from "~/server/db";
 import {images} from "~/server/db/schema";
 
@@ -28,11 +29,11 @@ export const ourFileRouter = {
             const user = await auth();
 
 
+
             // If you throw, the user will not be able to upload
             // eslint-disable-next-line @typescript-eslint/only-throw-error
             if (!user.userId) throw new UploadThingError("Unauthorized");
 
-            console.log("user id", user.userId);
 
             // Whatever is returned here is accessible in onUploadComplete as `metadata`
             return { userId: user.userId };

@@ -2,7 +2,7 @@ import { getImageById } from "~/server/queries";
 import Modal from "~/app/@modal/(.)photos/[id]/modal";
 import PhotoInteractions from "./PhotoInteractions";
 import CommentSection from "./CommentSection";
-
+import CommentBox from "./CommentBox";
 import CloseButton from "~/app/@modal/(.)photos/[id]/closeButton";
 
 export default async function PhotoModal({
@@ -53,6 +53,7 @@ export default async function PhotoModal({
                             <div className="flex-1 overflow-y-auto p-6">
                                 <PhotoInteractions imageId={image.id} />
                                 <CommentSection imageId={image.id} />
+                                <CommentBox imageId={image.id} />
                             </div>
                         </div>
                     </div>

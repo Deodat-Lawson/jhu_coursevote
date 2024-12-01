@@ -1,10 +1,9 @@
 
-
 import Link from "next/link";
 import { db } from "~/server/db";
 import { ClerkProvider, SignedIn, UserButton } from "@clerk/nextjs";
 import { UploadButton } from "~/app/utils/uploadthing";
-import { getImages } from "~/server/queries";
+import {getCommentsByImageId, getImages} from "~/server/queries";
 import {UploadingBox} from "~/app/_components/UploadingBox"
 
 export const dynamic = "force-dynamic";
@@ -30,9 +29,6 @@ async function Images() {
                     </div>
                     <div className="mt-4 space-y-2">
                         <h3 className="text-lg font-medium text-white">{post.name}</h3>
-                        <p className="text-sm text-slate-300">
-                            Uploaded by {post.userId}
-                        </p>
                     </div>
                 </div>
             ))}
@@ -40,6 +36,8 @@ async function Images() {
     );
 
 }
+
+
 
 export default function HomePage() {
     return (

@@ -9,6 +9,7 @@ import {
     pgTableCreator, serial,
     timestamp,
     varchar,
+    uniqueIndex,
 } from "drizzle-orm/pg-core";
 
 /**
@@ -58,6 +59,7 @@ export const comments = createTable(
         ),
     },
     (comment) => ({
+
         // Index for faster comment lookups by image
         imageIndex: index("image_id_idx").on(comment.imageId),
         // Index for faster comment lookups by user
@@ -65,4 +67,35 @@ export const comments = createTable(
     })
 );
 
+
+export const ratings = createTable(
+    "rating",
+    {
+        id: serial("id").primaryKey(),
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+        rating: integer("rating")
+            .notNull(),// Constrains rating to 1-5
+        imageId: integer("image_id")
+            .notNull()
+            .references(() => images.id, {
+                onDelete: "cascade" // Delete ratings when parent image is deleted
+            }),
+        userId: varchar("user_id", { length: 256 }).notNull(),
+        createdAt: timestamp("created_at", { withTimezone: true })
+            .default(sql`CURRENT_TIMESTAMP`)
+            .notNull(),
+        updatedAt: timestamp("updated_at", { withTimezone: true }).$onUpdate(
+            () => new Date()
+        ),
+    },
+    (rating) => ({
+        // Index for faster rating lookups by image
+        imageIndex: index("rating_image_id_idx").on(rating.imageId),
+        // Index for faster rating lookups by user
+        userIndex: index("rating_user_id_idx").on(rating.userId),
+
+        // Unique constraint to prevent multiple ratings from same user on same image
+        // uniqueRating: uniqueIndex("unique_user_image_rating").on(rating.userId, rating.imageId),
+    })
+);
 
