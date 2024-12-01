@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { Star, MessageCircle, Share2 } from 'lucide-react';
 import { useRouter } from "next/navigation";
+import {  SignedIn, SignedOut} from '@clerk/nextjs'
 
 interface RatingData {
     averageRating: number;
@@ -83,6 +84,8 @@ export default function PhotoInteractions({ imageId }: { imageId: number }) {
         }
     };
 
+
+
     const handleShare = async () => {
         try {
             await navigator.share({
@@ -107,40 +110,55 @@ export default function PhotoInteractions({ imageId }: { imageId: number }) {
     return (
         <div className="flex space-x-4 mb-6">
             <div className="flex items-center space-x-2">
-                <div className="flex space-x-1">
-                    {[1, 2, 3, 4, 5].map((star) => (
-                        <button
-                            key={star}
-                            onClick={() => handleRating(star)}
-                            onMouseEnter={() => setHoveredRating(star)}
-                            onMouseLeave={() => setHoveredRating(null)}
-                            className="focus:outline-none"
-                        >
+
+                <SignedIn>
+                    <div className="flex space-x-1">
+                        {[1, 2, 3, 4, 5].map((star) => (
+                            <button
+                                key={star}
+                                onClick={() => handleRating(star)}
+                                onMouseEnter={() => setHoveredRating(star)}
+                                onMouseLeave={() => setHoveredRating(null)}
+                                className="focus:outline-none"
+                            >
+                                <Star
+                                    className="w-6 h-6 transition-colors duration-200"
+                                    fill={(hoveredRating !== null ? star <= hoveredRating : star <= (rating || 0))
+                                        ? '#60A5FA'
+                                        : 'none'}
+                                    stroke={(hoveredRating !== null ? star <= hoveredRating : star <= (rating || 0))
+                                        ? '#60A5FA'
+                                        : '#94A3B8'}
+                                />
+                            </button>
+                        ))}
+                    </div>
+                </SignedIn>
+
+                <SignedOut>
+                    <div className="flex space-x-1">
+                        {[1, 2, 3, 4, 5].map((star) => (
                             <Star
-                                className="w-6 h-6 transition-colors duration-200"
-                                fill={(hoveredRating !== null ? star <= hoveredRating : star <= (rating || 0))
-                                    ? '#60A5FA'
-                                    : 'none'}
-                                stroke={(hoveredRating !== null ? star <= hoveredRating : star <= (rating || 0))
-                                    ? '#60A5FA'
-                                    : '#94A3B8'}
+                                key={star}
+                                className="w-6 h-6 text-slate-400"
+                                fill="none"
                             />
-                        </button>
-                    ))}
-                </div>
+                        ))}
+                    </div>
+
+                </SignedOut>
+
+
                 <span className="text-slate-600">
                     {averageRating.toFixed(1)} ({totalRatings})
                 </span>
             </div>
-            <button className="flex items-center space-x-1 text-slate-400 hover:text-blue-400 transition-colors duration-200">
-                <MessageCircle className="w-6 h-6" />
-                <span>234</span>
-            </button>
+
             <button
                 onClick={handleShare}
                 className="flex items-center space-x-1 text-slate-400 hover:text-blue-400 transition-colors duration-200"
             >
-                <Share2 className="w-6 h-6" />
+                <Share2 className="w-6 h-6"/>
                 <span>Share</span>
             </button>
         </div>

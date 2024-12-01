@@ -9,12 +9,30 @@ export async function POST(request: Request) {
     console.log("Rating request received");
     try {
         const user = await auth();
+        const { imageId, rating, command } = await request.json();
 
         if (!user.userId) {
-            return new NextResponse("Unauthorized", { status: 401 });
+
+            // Get average rating and total count
+            const [avgResult] = await db
+                .select({
+                    average: avg(ratings.rating),
+                    total: count(ratings.id),
+                })
+                .from(ratings)
+                .where(eq(ratings.imageId, imageId));
+
+            const result = {
+                averageRating: avgResult?.average ?? 0,
+                totalRatings: avgResult?.total ?? 0,
+                userRating: 0, // Return 0 if no rating exists
+            };
+
+            return new NextResponse(JSON.stringify(result), { status: 200 });
+
         }
 
-        const { imageId, rating, command } = await request.json();
+
 
 
         if(command === "get") {
@@ -123,3 +141,6 @@ export async function POST(request: Request) {
         return new NextResponse("Internal Server Error", { status: 500 });
     }
 }
+
+
+

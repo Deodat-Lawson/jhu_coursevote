@@ -3,7 +3,6 @@ import Modal from "~/app/@modal/(.)photos/[id]/modal";
 import PhotoInteractions from "./PhotoInteractions";
 import CommentSection from "./CommentSection";
 import CommentBox from "./CommentBox";
-
 import CloseButton from "~/app/@modal/(.)photos/[id]/closeButton";
 
 export default async function PhotoModal({

@@ -29,9 +29,6 @@ async function Images() {
                     </div>
                     <div className="mt-4 space-y-2">
                         <h3 className="text-lg font-medium text-white">{post.name}</h3>
-                        <p className="text-sm text-slate-300">
-                            Uploaded by {post.userId}
-                        </p>
                     </div>
                 </div>
             ))}
