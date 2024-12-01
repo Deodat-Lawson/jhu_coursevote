@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import FullPageImagePhotoInteractions from "~/app/components/full-page-image-photo-interactions";
 
 interface Comment {
     id: number;
