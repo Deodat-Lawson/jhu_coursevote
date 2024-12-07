@@ -1,13 +1,14 @@
-"use client";
+'use client';
 
-import { useState } from "react";
+import { useState } from 'react';
 import { useRouter } from "next/navigation";
 
-interface CommentFormProps {
+
+interface CommentSectionProps {
     imageId: number;
 }
 
-export default function CommentForm({ imageId }: CommentFormProps) {
+export default function FullPageImageCommentSection({ imageId }: CommentSectionProps) {
     const router = useRouter();
     const [newComment, setNewComment] = useState("");
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -54,7 +55,9 @@ export default function CommentForm({ imageId }: CommentFormProps) {
     };
 
     return (
-        <div className="space-y-2">
+        <div className="space-y-4">
+            <h4 className="font-medium text-slate-100">Comments</h4>
+
             <form onSubmit={handleSubmitComment} className="flex gap-2 sticky bottom-4 bg-slate-800/90 backdrop-blur-sm p-4 rounded-lg shadow-lg">
                 <input
                     type="text"
@@ -83,6 +86,7 @@ export default function CommentForm({ imageId }: CommentFormProps) {
                     Error: Please Sign In
                 </div>
             )}
+
         </div>
     );
 }

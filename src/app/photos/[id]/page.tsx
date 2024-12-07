@@ -1,6 +1,7 @@
 import { getImageById } from "~/server/queries";
 import FullPageImagePhotoInteractions from "~/app/components/full-page-image-photo-interactions";
-import FullPageImageCommentSection from "~/app/components/full-image-page-comment";
+import FullPageImageCommentSection from "~/app/components/full-page-image-comment";
+import FullPageImageCommentBox from "~/app/components/full-page-image-comment-box";
 
 export default async function FullPageImageView({ params }: { params: Promise<{ id: string }> }) {
     const { id } = await params;
@@ -40,6 +41,7 @@ export default async function FullPageImageView({ params }: { params: Promise<{ 
                         <div className="flex-1 overflow-y-auto p-6 space-y-6">
                             <FullPageImagePhotoInteractions imageId={image.id} />
                             <FullPageImageCommentSection imageId={image.id} />
+                            <FullPageImageCommentBox imageId={image.id} />
                         </div>
                     </div>
                 </div>
