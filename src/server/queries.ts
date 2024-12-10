@@ -1,4 +1,9 @@
+
 import { db } from "~/server/db";
+import {auth} from "@clerk/nextjs/server";
+
+
+
 
 export async function getImages() {
     const images = await db.query.images.findMany({

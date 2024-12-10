@@ -99,3 +99,22 @@ export const ratings = createTable(
     })
 );
 
+
+export const courses = createTable(
+    "courses",
+    {
+        id: serial("id").primaryKey(),
+        title: varchar("title", { length: 256 }).notNull(),
+        imageId: integer("image_id")
+            .references(() => images.id, { onDelete: "set null" }),
+        teacher: varchar("teacher", { length: 256 }).notNull(),
+        courseNumber: varchar("course_number", { length: 256 }).notNull(),
+        description: text("description").notNull(),
+        createdAt: timestamp("created_at", { withTimezone: true })
+            .default(sql`CURRENT_TIMESTAMP`)
+            .notNull(),
+        updatedAt: timestamp("updated_at", { withTimezone: true }).$onUpdate(
+            () => new Date()
+        ),
+    }
+);

@@ -5,12 +5,17 @@ import CommentSection from "./CommentSection";
 import CommentBox from "./CommentBox";
 import CloseButton from "~/app/@modal/(.)photos/[id]/closeButton";
 
+export const dynamic = "force-dynamic";
+
 export default async function PhotoModal({
                                              params,
                                          }: {
     params: Promise<{ id: string }>;
 }) {
     const image = await getImageById(parseInt((await params).id));
+
+
+
 
     return (
         <Modal>
