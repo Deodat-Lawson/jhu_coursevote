@@ -14,14 +14,14 @@ export async function POST(request: Request) {
             );
         }
 
-        const {imageId, teacher, courseCode, description, title} = await request.json();
+        const {imageUrl, teacher, courseCode, description, title} = await request.json();
 
         const insertedCourse = await db.insert(courses).values({
 
             // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
             title: title,
             // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-            imageId: imageId,
+            imageUrl: imageUrl,
             // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
             teacher: teacher,
             // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment

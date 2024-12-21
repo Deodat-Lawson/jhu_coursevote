@@ -3,17 +3,17 @@ import Link from "next/link";
 import { db } from "~/server/db";
 import { ClerkProvider, SignedIn, UserButton } from "@clerk/nextjs";
 import { UploadButton } from "~/app/utils/uploadthing";
-import {getCommentsByImageId, getImages} from "~/server/queries";
+import { getCourses } from "~/server/queries";
 import {UploadingBox} from "~/app/_components/UploadingBox"
 
 export const dynamic = "force-dynamic";
 
-async function Images() {
-    const images = await getImages();
+async function Courses() {
+    const courses = await getCourses();
 
     return (
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-            {images.map((post) => (
+            {courses.map((post) => (
                 <div
                     key={post.id}
                     className="group overflow-hidden rounded-lg bg-white/10 p-4 transition-all hover:bg-white/20"
@@ -21,14 +21,18 @@ async function Images() {
                     <div className="aspect-square overflow-hidden rounded-lg">
                         <Link href={`/photos/${post.id}`}>
                         <img
-                            src={post.url}
-                            alt={post.name}
+                            src={post.imageUrl}
+                            alt={post.title}
                             className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
                         />
                         </Link>
                     </div>
                     <div className="mt-4 space-y-2">
-                        <h3 className="text-lg font-medium text-white">{post.name}</h3>
+                        <h3 className="text-lg font-medium text-white">Course Name: {post.title}</h3>
+                        <p className="text-sm text-gray-300">Course Code: {post.courseNumber}</p>
+                        <p className={"text-sm text-gray-300"}>Taught by: {post.teacher}</p>
+                        <p className="text-sm text-gray-300">Description: {post.description}</p>
+
                     </div>
                 </div>
             ))}
@@ -59,7 +63,7 @@ export default function HomePage() {
                         <h2 className="text-xl font-semibold text-white">Popular Courses</h2>
                         <div className="h-px flex-1 bg-slate-600 mx-4"></div>
                     </div>
-                    <Images/>
+                    <Courses/>
                 </div>
             </div>
         </main>

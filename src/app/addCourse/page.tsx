@@ -8,10 +8,10 @@ export const dynamic = "force-dynamic";
 
 // PRESET_IMAGES and interfaces remain the same...
 const PRESET_IMAGES = [
-    { id: 1, src: "/assets/sigma.gif", alt: "Funny Course Image 1" },
-    { id: 2, src: "/assets/kim.gif", alt: "Funny Course Image 2" },
-    { id: 3, src: "/assets/ew.jpg", alt: "Funny Course Image 3" },
-    { id: 4, src: "/assets/hamster.gif", alt: "Funny Course Image 4" },
+    { id: 1, src: "/assets/sigma.gif", alt: "Funny Course Image 1" , url: "https://utfs.io/f/7CCGyytM9ORCFGKhm4nsIbGl2he4AvWfkDKSNC9ZREiLmap7"},
+    { id: 2, src: "/assets/kim.gif", alt: "Funny Course Image 2", url:"https://utfs.io/f/7CCGyytM9ORCboWhEauOw8sMPYGrfh7T5AlENagnKQFVIqj3"},
+    { id: 3, src: "/assets/ew.jpg", alt: "Funny Course Image 3", url: "https://utfs.io/f/7CCGyytM9ORCJERL6bxiaVfLoKeWcgly6xHs25UkAqC93I8w"},
+    { id: 4, src: "/assets/hamster.gif", alt: "Funny Course Image 4", url: "https://utfs.io/f/7CCGyytM9ORCQ7r5oOYzOQ4hiWTvPCsfnG1rlVbjdYFyLacA"},
 ];
 
 interface UserUploadedImage {
@@ -24,6 +24,7 @@ export default function CourseAdditionPage() {
     // Previous state declarations remain the same...
     const [step, setStep] = useState(1);
     const [selectedImage, setSelectedImage] = useState<number | null>(null);
+    const [selectedImageUrl, setSelectedImageUrl] = useState<string | null>(null);
     const [userUploadedImages, setUserUploadedImages] = useState<UserUploadedImage[]>([]);
     const [refreshTrigger, setRefreshTrigger] = useState(0);
     const [isRefreshing, setIsRefreshing] = useState(false);
@@ -106,7 +107,7 @@ export default function CourseAdditionPage() {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    imageId: selectedImage,
+                    imageUrl: selectedImageUrl,
                     teacher: formData.teacher,
                     courseCode: formData.courseNumber,
                     description: formData.description,
@@ -147,8 +148,9 @@ export default function CourseAdditionPage() {
         }));
     };
 
-    const handleImageSelect = (id: number, isPreset: boolean) => {
+    const handleImageSelect = (id: number, url: string, isPreset: boolean) => {
         setSelectedImage(id);
+        setSelectedImageUrl(url);
     };
 
 
@@ -176,7 +178,7 @@ export default function CourseAdditionPage() {
                                 {PRESET_IMAGES.map((image) => (
                                     <div
                                         key={image.id}
-                                        onClick={() => setSelectedImage(image.id)}
+                                        onClick={() => handleImageSelect(image.id, image.src, true )}
                                         className={`relative cursor-pointer rounded-lg overflow-hidden ${
                                             selectedImage === image.id ? 'ring-2 ring-blue-500' : ''
                                         }`}
@@ -212,7 +214,7 @@ export default function CourseAdditionPage() {
                                         {userUploadedImages.map((image) => (
                                             <div
                                                 key={image.id}
-                                                onClick={() => handleImageSelect(image.id, false)}
+                                                onClick={() => handleImageSelect(image.id, image.src, false)}
                                                 className={`relative cursor-pointer rounded-lg overflow-hidden ${
                                                     selectedImage === image.id ? 'ring-2 ring-blue-500' : ''
                                                 }`}

@@ -105,8 +105,7 @@ export const courses = createTable(
     {
         id: serial("id").primaryKey(),
         title: varchar("title", { length: 256 }).notNull(),
-        imageId: integer("image_id")
-            .references(() => images.id, { onDelete: "set null" }),
+        imageUrl: varchar("url", { length: 512 }).notNull(),
         teacher: varchar("teacher", { length: 256 }).notNull(),
         courseNumber: varchar("course_number", { length: 256 }).notNull(),
         description: text("description").notNull(),

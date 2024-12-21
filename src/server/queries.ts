@@ -1,8 +1,13 @@
-
 import { db } from "~/server/db";
 import {auth} from "@clerk/nextjs/server";
 
 
+export async function getCourses() {
+    const courses = await db.query.courses.findMany({
+        orderBy: (model, { desc }) => desc(model.id),
+    });
+    return courses;
+}
 
 
 export async function getImages() {

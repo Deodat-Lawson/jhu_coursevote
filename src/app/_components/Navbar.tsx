@@ -38,10 +38,11 @@ export const Navbar = () => {
                             About us
                         </Link>
 
-
-                        <Link href="/addCourse" className="px-3 py-2 rounded-md hover:bg-gray-700 transition-colors">
-                            Add a Course
-                        </Link>
+                        <SignedIn>
+                            <Link href="/addCourse" className="px-3 py-2 rounded-md hover:bg-gray-700 transition-colors">
+                                Add a Course
+                            </Link>
+                        </SignedIn>
 
                         <div className="flex flex-row">
 
