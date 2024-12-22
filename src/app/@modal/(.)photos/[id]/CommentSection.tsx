@@ -4,10 +4,10 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 interface CommentFormProps {
-    imageId: number;
+    courseId: number;
 }
 
-export default function CommentForm({ imageId }: CommentFormProps) {
+export default function CommentForm({ courseId }: CommentFormProps) {
     const router = useRouter();
     const [newComment, setNewComment] = useState("");
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -29,7 +29,7 @@ export default function CommentForm({ imageId }: CommentFormProps) {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    imageId,
+                    courseId,
                     text: newComment,
                 }),
             });

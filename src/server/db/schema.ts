@@ -47,9 +47,11 @@ export const comments = createTable(
     {
         id: serial("id").primaryKey(),
         content: text("content").notNull(),
-        imageId: integer("image_id").notNull().references(() => images.id, {
-            onDelete: "cascade" // This will delete comments when the parent image is deleted
-        }),
+        courseId: integer("course_id")
+            .notNull()
+            .references(() => courses.id, {
+                onDelete: "cascade", // Delete comments when the parent course is deleted
+            }),
         userId: varchar("user_id", { length: 256 }).notNull(),
         createdAt: timestamp("created_at", { withTimezone: true })
             .default(sql`CURRENT_TIMESTAMP`)
@@ -59,9 +61,8 @@ export const comments = createTable(
         ),
     },
     (comment) => ({
-
-        // Index for faster comment lookups by image
-        imageIndex: index("image_id_idx").on(comment.imageId),
+        // Index for faster comment lookups by course
+        courseIndex: index("course_id_idx").on(comment.courseId),
         // Index for faster comment lookups by user
         userIndex: index("user_id_idx").on(comment.userId),
     })
@@ -73,12 +74,11 @@ export const ratings = createTable(
     {
         id: serial("id").primaryKey(),
         // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-        rating: integer("rating")
-            .notNull(),// Constrains rating to 1-5
-        imageId: integer("image_id")
+        rating: integer("rating").notNull(), // Constrain rating as needed (e.g., 1-5)
+        courseId: integer("course_id")
             .notNull()
-            .references(() => images.id, {
-                onDelete: "cascade" // Delete ratings when parent image is deleted
+            .references(() => courses.id, {
+                onDelete: "cascade", // Delete ratings when the parent course is deleted
             }),
         userId: varchar("user_id", { length: 256 }).notNull(),
         createdAt: timestamp("created_at", { withTimezone: true })
@@ -89,13 +89,14 @@ export const ratings = createTable(
         ),
     },
     (rating) => ({
-        // Index for faster rating lookups by image
-        imageIndex: index("rating_image_id_idx").on(rating.imageId),
+        // Index for faster rating lookups by course
+        courseIndex: index("rating_course_id_idx").on(rating.courseId),
         // Index for faster rating lookups by user
         userIndex: index("rating_user_id_idx").on(rating.userId),
 
-        // Unique constraint to prevent multiple ratings from same user on same image
-        // uniqueRating: uniqueIndex("unique_user_image_rating").on(rating.userId, rating.imageId),
+        // Unique constraint (optional) to prevent multiple ratings
+        // from the same user on the same course
+        // uniqueRating: uniqueIndex("unique_user_course_rating").on(rating.userId, rating.courseId),
     })
 );
 

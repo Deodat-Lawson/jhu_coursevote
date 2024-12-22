@@ -9,7 +9,7 @@ export async function POST(request: Request) {
     console.log("Rating request received");
     try {
         const user = await auth();
-        const { imageId, rating, command } = await request.json();
+        const { courseId, rating, command } = await request.json();
 
         if (!user.userId) {
 
@@ -20,7 +20,8 @@ export async function POST(request: Request) {
                     total: count(ratings.id),
                 })
                 .from(ratings)
-                .where(eq(ratings.imageId, imageId));
+                // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+                .where(eq(ratings.courseId, courseId));
 
             const result = {
                 averageRating: avgResult?.average ?? 0,
@@ -42,7 +43,8 @@ export async function POST(request: Request) {
                 .from(ratings)
                 .where(
                     and(
-                        eq(ratings.imageId, imageId),
+                        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+                        eq(ratings.courseId, courseId),
                         eq(ratings.userId, user.userId)
                     )
                 );
@@ -54,7 +56,7 @@ export async function POST(request: Request) {
                     total: count(ratings.id),
                 })
                 .from(ratings)
-                .where(eq(ratings.imageId, imageId));
+                .where(eq(ratings.courseId, courseId));
 
             const result = {
                 averageRating: avgResult?.average ?? 0,
@@ -73,7 +75,7 @@ export async function POST(request: Request) {
                 .from(ratings)
                 .where(
                     and(
-                        eq(ratings.imageId, imageId),
+                        eq(ratings.courseId, courseId),
                         eq(ratings.userId, user.userId)
                     )
                 );
@@ -88,7 +90,7 @@ export async function POST(request: Request) {
                     })
                     .where(
                         and(
-                            eq(ratings.imageId, imageId),
+                            eq(ratings.courseId, courseId),
                             eq(ratings.userId, user.userId)
                         )
                     );
@@ -98,7 +100,7 @@ export async function POST(request: Request) {
                     .insert(ratings)
                     .values({
                         userId: user.userId,
-                        imageId: imageId,
+                        courseId: courseId,
                         rating: rating,
                         createdAt: new Date(),
                     });
@@ -111,7 +113,7 @@ export async function POST(request: Request) {
                     total: count(ratings.id),
                 })
                 .from(ratings)
-                .where(eq(ratings.imageId, imageId));
+                .where(eq(ratings.courseId, courseId));
 
             // Get user's current rating
             const [userRating] = await db
@@ -119,7 +121,7 @@ export async function POST(request: Request) {
                 .from(ratings)
                 .where(
                     and(
-                        eq(ratings.imageId, imageId),
+                        eq(ratings.courseId, courseId),
                         eq(ratings.userId, user.userId)
                     )
                 );

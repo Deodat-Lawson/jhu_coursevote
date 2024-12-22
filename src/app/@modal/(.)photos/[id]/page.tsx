@@ -1,9 +1,10 @@
-import { getImageById } from "~/server/queries";
+import {getCourses, getImageById} from "~/server/queries";
 import Modal from "~/app/@modal/(.)photos/[id]/modal";
 import PhotoInteractions from "./PhotoInteractions";
 import CommentSection from "./CommentSection";
 import CommentBox from "./CommentBox";
 import CloseButton from "~/app/@modal/(.)photos/[id]/closeButton";
+import {getCourseById} from "~/server/queries";
 
 export const dynamic = "force-dynamic";
 
@@ -12,9 +13,7 @@ export default async function PhotoModal({
                                          }: {
     params: Promise<{ id: string }>;
 }) {
-    const image = await getImageById(parseInt((await params).id));
-
-
+    const  course = await getCourseById(parseInt((await params).id));
 
 
     return (
@@ -31,8 +30,8 @@ export default async function PhotoModal({
                         {/* Image Container - Fixed to 65% width */}
                         <div className="w-[65%] h-full bg-slate-900">
                             <img
-                                src={image.url}
-                                alt={image.name}
+                                src={course.imageUrl}
+                                alt={course.title}
                                 className="w-full h-full object-contain"
                             />
                         </div>
@@ -45,20 +44,17 @@ export default async function PhotoModal({
                                     <div className="w-10 h-10 rounded-full bg-slate-700" />
                                     <div>
                                         <h3 className="font-medium text-slate-100">
-                                            {image.name}
+                                            {course.title}
                                         </h3>
-                                        <p className="text-sm text-slate-400">
-                                            By {image.userId}
-                                        </p>
                                     </div>
                                 </div>
                             </div>
 
                             {/* Scrollable Content Area */}
                             <div className="flex-1 overflow-y-auto p-6">
-                                <PhotoInteractions imageId={image.id} />
-                                <CommentSection imageId={image.id} />
-                                <CommentBox imageId={image.id} />
+                                <PhotoInteractions courseId={course.id} />
+                                <CommentSection courseId={course.id} />
+                                <CommentBox courseId={course.id} />
                             </div>
                         </div>
                     </div>
