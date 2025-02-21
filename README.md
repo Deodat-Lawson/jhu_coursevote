@@ -1,5 +1,4 @@
-# Create T3 App
-
+# JHU CourseVote
 ## TODO
 
 - [X] Make it deploy
@@ -11,7 +10,5 @@
 - [X] React "tiant"
 - [X] Routing
 - [X] Delete button
-- [ ] Comments
-- [ ] 5 Stars Button and sync to backend database
-- [ ] 
-- 
+- [X] Comments
+- [X] 5 Stars Button and sync to backend database
