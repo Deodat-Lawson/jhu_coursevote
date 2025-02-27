@@ -34,9 +34,15 @@ export const Navbar = () => {
                         <Link href="/" className="px-3 py-2 rounded-md hover:bg-gray-700 transition-colors">
                             Home
                         </Link>
-                        {/*<Link href="/about" className="px-3 py-2 rounded-md hover:bg-gray-700 transition-colors">*/}
-                        {/*    About us*/}
-                        {/*</Link>*/}
+                        <Link href="/about" className="px-3 py-2 rounded-md hover:bg-gray-700 transition-colors">
+                            About us
+                        </Link>
+
+                        <SignedIn>
+                            <Link href="/addCourse" className="px-3 py-2 rounded-md hover:bg-gray-700 transition-colors">
+                                Add a Course
+                            </Link>
+                        </SignedIn>
 
                         <div className="flex flex-row">
 

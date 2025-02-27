@@ -11,7 +11,7 @@ interface RatingData {
     userRating: number | null;
 }
 
-export default function PhotoInteractions({ imageId }: { imageId: number }) {
+export default function PhotoInteractions({ courseId }: { courseId: number }) {
     const router = useRouter();
     const [rating, setRating] = useState<number | null>(null);
     const [hoveredRating, setHoveredRating] = useState<number | null>(null);
@@ -31,7 +31,7 @@ export default function PhotoInteractions({ imageId }: { imageId: number }) {
                         "Content-Type": "application/json",
                     },
                     body: JSON.stringify({
-                        imageId: imageId,
+                        courseId: courseId,
                         rating: -1,
                         command: "get",
                     }),
@@ -53,7 +53,7 @@ export default function PhotoInteractions({ imageId }: { imageId: number }) {
         };
 
         void fetchRatingData();
-    }, [imageId]);
+    }, [courseId]);
 
     const handleRating = async (rating: number) => {
         try {
@@ -63,7 +63,7 @@ export default function PhotoInteractions({ imageId }: { imageId: number }) {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    imageId: imageId,
+                    courseId: courseId,
                     rating: rating,
                     command: "set",
                 }),

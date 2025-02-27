@@ -17,8 +17,8 @@ function getAnonymousName(userId: string): string {
     return `Anonymous ${animals[index]}`;
 }
 
-async function CommentList({ imageId }: { imageId: number }) {
-    const comments = await getCommentsByImageId(imageId);
+async function CommentList({ courseId }: { courseId : number }) {
+    const comments = await getCommentsByImageId(courseId);
 
     if (!comments.length) {
         return (
@@ -50,7 +50,7 @@ async function CommentList({ imageId }: { imageId: number }) {
     );
 }
 
-export default function Comments({ imageId }: { imageId: number }) {
+export default function Comments({ courseId }: { courseId : number }) {
     return (
         <div className="space-y-4 max-w-2xl mx-auto">
             <h4 className="font-medium text-slate-100 text-lg">Comments</h4>
@@ -64,7 +64,7 @@ export default function Comments({ imageId }: { imageId: number }) {
                     </div>
                 }
             >
-                <CommentList imageId={imageId} />
+                <CommentList courseId={courseId} />
             </Suspense>
         </div>
     );

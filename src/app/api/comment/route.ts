@@ -14,9 +14,9 @@ export async function POST(request: Request) {
             );
         }
 
-        const { imageId, text } = await request.json();
+        const { courseId, text } = await request.json();
 
-        if (!imageId || !text) {
+        if (!courseId || !text) {
             return NextResponse.json(
                 { error: "Missing required fields" },
                 { status: 400 }
@@ -26,7 +26,7 @@ export async function POST(request: Request) {
         await db.insert(comments).values({
             userId: user.userId,
             // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-            imageId: imageId,
+            courseId: courseId,
             // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
             content: text,
             createdAt: new Date(),

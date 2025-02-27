@@ -1,4 +1,32 @@
 import { db } from "~/server/db";
+import {auth} from "@clerk/nextjs/server";
+
+
+export async function getCourses() {
+    const courses = await db.query.courses.findMany({
+        orderBy: (model, { desc }) => desc(model.id),
+    });
+    return courses;
+}
+
+export async function getCourseById(id: number) {
+    const course = await db.query.courses.findFirst({
+        where: (model, { eq }) => eq(model.id, id),
+    });
+    if (!course) {
+        throw new Error("Course not found");
+    }
+    return course;
+}
+
+export async function getCommentsByCourseId(courseId: number) {
+    const comments = await db.query.comments.findMany({
+        where: (model, { eq }) => eq(model.courseId, courseId),
+        orderBy: (model, { desc }) => desc(model.createdAt),
+    });
+    return comments;
+}
+
 
 export async function getImages() {
     const images = await db.query.images.findMany({
@@ -19,7 +47,7 @@ export async function getImageById(id: number) {
 
 export async function getCommentsByImageId(imageId: number) {
     const comments = await db.query.comments.findMany({
-        where: (model, { eq }) => eq(model.imageId, imageId),
+        where: (model, { eq }) => eq(model.courseId, imageId),
         orderBy: (model, { desc }) => desc(model.createdAt),
     });
     return comments;
