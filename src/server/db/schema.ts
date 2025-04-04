@@ -10,6 +10,7 @@ import {
     timestamp,
     varchar,
     uniqueIndex,
+    pgEnum, 
 } from "drizzle-orm/pg-core";
 
 /**
@@ -19,6 +20,7 @@ import {
  * @see https://orm.drizzle.team/docs/goodies#multi-project-schema
  */
 export const createTable = pgTableCreator((name) => `click_to_punch_nlp_${name}`);
+export const yearEnum = pgEnum("year_enum", ["1", "2", "3", "4"]);
 
 export const images = createTable(
   "image",
@@ -40,7 +42,39 @@ export const images = createTable(
   })
 );
 
+export const users = createTable(
+    "user",
+    {
+        id: serial("id").primaryKey(),
+        fullName: varchar("full_name", { length: 256 }).notNull(),
+        email: varchar("email", { length: 256 }).notNull().unique(), 
+        createdAt: timestamp("created_at", { withTimezone: true })
+            .default(sql`CURRENT_TIMESTAMP`)
+            .notNull(),
+        updatedAt: timestamp("updated_at", { withTimezone: true }).$onUpdate(() => new Date()),
+    }
+);
 
+export const userCourses = createTable(
+    "user_course",
+    {
+        userId: integer("user_id")
+            .notNull()
+            .references(() => users.id, { onDelete: "cascade" }),
+        id: serial("id").primaryKey(),
+        courseName: varchar("course_name", { length: 256 }).notNull(),
+        courseNumber: varchar("course_number", { length: 256 }).notNull(),
+        yearTaken: yearEnum("year_when_took").notNull(),
+        majorWhenTook: varchar("major_when_took", { length: 256 }).notNull(),
+        createdAt: timestamp("created_at", { withTimezone: true })
+            .default(sql`CURRENT_TIMESTAMP`)
+            .notNull(),
+        updatedAt: timestamp("updated_at", { withTimezone: true }).$onUpdate(() => new Date()),
+    },
+    (userCourse) => ({
+        userCourseIndex: index("user_course_idx").on(userCourse.userId, userCourse.courseName),
+    })
+);
 
 export const comments = createTable(
     "comment",
@@ -100,7 +134,6 @@ export const ratings = createTable(
     })
 );
 
-
 export const courses = createTable(
     "courses",
     {
@@ -118,3 +151,4 @@ export const courses = createTable(
         ),
     }
 );
+
