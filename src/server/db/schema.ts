@@ -116,5 +116,14 @@ export const courses = createTable(
         updatedAt: timestamp("updated_at", { withTimezone: true }).$onUpdate(
             () => new Date()
         ),
+        // Optional fields for pre-calculated distributions
+        freshmanPercentage: integer("freshman_percentage"), // Percentage of freshmen enrolled
+        sophomorePercentage: integer("sophomore_percentage"), // Percentage of sophomores enrolled
+        juniorPercentage: integer("junior_percentage"), // Percentage of juniors enrolled
+        seniorPercentage: integer("senior_percentage"), // Percentage of seniors enrolled
+         // Fields for major distribution
+        csMajorPercentage: integer("cs_major_percentage"), // Computer Science
+        eeMajorPercentage: integer("ee_major_percentage"), // Electrical Engineering
+        meMajorPercentage: integer("me_major_percentage"), // Mechanical Engineering
     }
 );
