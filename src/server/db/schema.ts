@@ -118,3 +118,26 @@ export const courses = createTable(
         ),
     }
 );
+
+export const difficulty = createTable(
+    "difficulty",
+    {
+        id: serial("id").primaryKey(),
+        title: varchar("title", { length: 256 }).notNull(),
+        referencedCourseId: integer("referenced_course_id")
+            .notNull()
+            .references(() => courses.id, {
+                onDelete: "cascade", // Delete ratings when the parent course is deleted
+            }),
+        referencedUserId: varchar("user_id", { length: 256 })
+            .notNull(),
+        rating: integer("rating").notNull()
+            .$type<0 | 1 | 2 | 3 | 4 | 5>(),
+        createdAt: timestamp("created_at", { withTimezone: true })
+            .default(sql`CURRENT_TIMESTAMP`)
+            .notNull(),
+        updatedAt: timestamp("updated_at", { withTimezone: true }).$onUpdate(
+            () => new Date()
+        ),
+    }
+);
